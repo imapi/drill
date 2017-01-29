@@ -138,7 +138,7 @@ fi
 
 # The SQLline client does not need the code cache.
 
-export SQLLINE_JAVA_OPTS=${SQLLINE_JAVA_OPTS:-"-XX:MaxPermSize=512M"}
+# export SQLLINE_JAVA_OPTS=${SQLLINE_JAVA_OPTS:-"-XX:MaxPermSize=512M"}
 
 # Class unloading is disabled by default in Java 7
 # http://hg.openjdk.java.net/jdk7u/jdk7u60/hotspot/file/tip/src/share/vm/runtime/globals.hpp#l1622
@@ -190,7 +190,7 @@ export DRILLBIT_CODE_CACHE_SIZE=${DRILLBIT_CODE_CACHE_SIZE:-"1G"}
 
 export DRILLBIT_OPTS="-Xms$DRILL_HEAP -Xmx$DRILL_HEAP -XX:MaxDirectMemorySize=$DRILL_MAX_DIRECT_MEMORY"
 export DRILLBIT_OPTS="$DRILLBIT_OPTS -XX:ReservedCodeCacheSize=$DRILLBIT_CODE_CACHE_SIZE -Ddrill.exec.enable-epoll=false"
-export DRILLBIT_OPTS="$DRILLBIT_OPTS -XX:MaxPermSize=$DRILLBIT_MAX_PERM"
+# export DRILLBIT_OPTS="$DRILLBIT_OPTS -XX:MaxPermSize=$DRILLBIT_MAX_PERM"
 
 # Under YARN, the log directory is usually YARN-provided. Replace any
 # value that may have been set in drill-env.sh.
