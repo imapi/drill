@@ -174,7 +174,7 @@
     <dependency>
       <groupId>org.mongodb</groupId>
       <artifactId>mongo-java-driver</artifactId>
-      <version>3.0.2</version>
+      <version>3.2.0</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
@@ -447,6 +447,12 @@
       <groupId>org.apache.avro</groupId>
       <artifactId>avro</artifactId>
       <version>1.7.7</version>
+      <exclusions>
+    	<exclusion>
+    	  <groupId>org.xerial.snappy</groupId>
+    	  <artifactId>snappy-java</artifactId>
+    	</exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.avro</groupId>

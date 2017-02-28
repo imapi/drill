@@ -63,17 +63,34 @@ public interface ExecConstants {
   String SPOOLING_BUFFER_DELETE = "drill.exec.buffer.spooling.delete";
   String SPOOLING_BUFFER_MEMORY = "drill.exec.buffer.spooling.size";
   String BATCH_PURGE_THRESHOLD = "drill.exec.sort.purge.threshold";
+
+  // External Sort Boot configuration
+
   String EXTERNAL_SORT_TARGET_BATCH_SIZE = "drill.exec.sort.external.batch.size";
   String EXTERNAL_SORT_TARGET_SPILL_BATCH_SIZE = "drill.exec.sort.external.spill.batch.size";
   String EXTERNAL_SORT_SPILL_GROUP_SIZE = "drill.exec.sort.external.spill.group.size";
   String EXTERNAL_SORT_SPILL_THRESHOLD = "drill.exec.sort.external.spill.threshold";
   String EXTERNAL_SORT_SPILL_DIRS = "drill.exec.sort.external.spill.directories";
   String EXTERNAL_SORT_SPILL_FILESYSTEM = "drill.exec.sort.external.spill.fs";
+  String EXTERNAL_SORT_SPILL_FILE_SIZE = "drill.exec.sort.external.spill.file_size";
   String EXTERNAL_SORT_MSORT_MAX_BATCHSIZE = "drill.exec.sort.external.msort.batch.maxsize";
+  String EXTERNAL_SORT_DISABLE_MANAGED = "drill.exec.sort.external.disable_managed";
+  String EXTERNAL_SORT_MERGE_LIMIT = "drill.exec.sort.external.merge_limit";
+  String EXTERNAL_SORT_SPILL_BATCH_SIZE = "drill.exec.sort.external.spill.spill_batch_size";
+  String EXTERNAL_SORT_MERGE_BATCH_SIZE = "drill.exec.sort.external.spill.merge_batch_size";
+  String EXTERNAL_SORT_MAX_MEMORY = "drill.exec.sort.external.mem_limit";
+  String EXTERNAL_SORT_BATCH_LIMIT = "drill.exec.sort.external.batch_limit";
+
+  // External Sort Runtime options
+
+  BooleanValidator EXTERNAL_SORT_DISABLE_MANAGED_OPTION = new BooleanValidator("exec.sort.disable_managed", false);
+
+
   String TEXT_LINE_READER_BATCH_SIZE = "drill.exec.storage.file.text.batch.size";
   String TEXT_LINE_READER_BUFFER_SIZE = "drill.exec.storage.file.text.buffer.size";
   String HAZELCAST_SUBNETS = "drill.exec.cache.hazel.subnets";
   String HTTP_ENABLE = "drill.exec.http.enabled";
+  String HTTP_MAX_PROFILES = "drill.exec.http.max_profiles";
   String HTTP_PORT = "drill.exec.http.port";
   String HTTP_ENABLE_SSL = "drill.exec.http.ssl_enabled";
   String HTTP_CORS_ENABLED = "drill.exec.http.cors.enabled";
@@ -397,4 +414,22 @@ public interface ExecConstants {
 
   String DYNAMIC_UDF_SUPPORT_ENABLED = "exec.udf.enable_dynamic_support";
   BooleanValidator DYNAMIC_UDF_SUPPORT_ENABLED_VALIDATOR = new BooleanValidator(DYNAMIC_UDF_SUPPORT_ENABLED, true, true);
+
+  /**
+   * Option to save query profiles. If false, no query profile will be saved
+   * for any query.
+   */
+  String ENABLE_QUERY_PROFILE_OPTION = "exec.query_profile.save";
+  BooleanValidator ENABLE_QUERY_PROFILE_VALIDATOR = new BooleanValidator(
+      ENABLE_QUERY_PROFILE_OPTION, true, false);
+
+  /**
+   * Profiles are normally written after the last client message to reduce latency.
+   * When running tests, however, we want the profile written <i>before</i> the
+   * return so that the client can immediately read the profile for test
+   * verification.
+   */
+  String QUERY_PROFILE_DEBUG_OPTION = "exec.query_profile.debug_mode";
+  BooleanValidator QUERY_PROFILE_DEBUG_VALIDATOR = new BooleanValidator(
+      QUERY_PROFILE_DEBUG_OPTION, false, false);
 }
