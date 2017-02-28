@@ -4,13 +4,19 @@
       type: "file",
       connection: "file:///",
       workspaces: {
-        "root" : {
-          location: "/",
-          writable: false
+        "tmp_fs" : {
+          location: "/tmp/disk",
+          writable: true,
+          "defaultInputFormat": "parquet"
         },
-        "tmp" : {
-          location: "/tmp",
-          writable: true
+        "ram_fs" : {
+          location: "/tmp/ram",
+          writable: true,
+          "defaultInputFormat": "parquet"
+        },
+        "etl" : {
+          location: "/tmp/etl",
+          writable: false
         }
       },
       formats: {
@@ -112,15 +118,30 @@
         }
       }
     },
-    alluxio: {
+    afs: {
       "type": "file",
       "enabled": true,
       "connection": "alluxio://localhost:19998",
       "config": null,
       "workspaces": {
-        "root": {
-          "location": "/",
+        "tmp": {
+          "location": "/tmp",
           "writable": true,
+          "defaultInputFormat": "parquet"
+        },
+        "validation": {
+          "location": "/validation",
+          "writable": true,
+          "defaultInputFormat": "parquet"
+        },
+        "etl": {
+          "location": "/datasets",
+          "writable": true,
+          "defaultInputFormat": "parquet"
+        },
+        "ds": {
+          "location": "/datasets",
+          "writable": false,
           "defaultInputFormat": "parquet"
         }
       },

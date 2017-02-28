@@ -136,7 +136,7 @@ public interface ExecConstants {
   String OUTPUT_FORMAT_OPTION = "store.format";
   OptionValidator OUTPUT_FORMAT_VALIDATOR = new StringValidator(OUTPUT_FORMAT_OPTION, "parquet");
   String PARQUET_BLOCK_SIZE = "store.parquet.block-size";
-  OptionValidator PARQUET_BLOCK_SIZE_VALIDATOR = new LongValidator(PARQUET_BLOCK_SIZE, 64*1024*1024);
+  OptionValidator PARQUET_BLOCK_SIZE_VALIDATOR = new LongValidator(PARQUET_BLOCK_SIZE,16*1024*1024);
   String PARQUET_PAGE_SIZE = "store.parquet.page-size";
   OptionValidator PARQUET_PAGE_SIZE_VALIDATOR = new LongValidator(PARQUET_PAGE_SIZE, 1024*1024);
   String PARQUET_DICT_PAGE_SIZE = "store.parquet.dictionary.page-size";
@@ -146,7 +146,7 @@ public interface ExecConstants {
       PARQUET_WRITER_COMPRESSION_TYPE, "gzip", "snappy", "gzip", "none");
   String PARQUET_WRITER_ENABLE_DICTIONARY_ENCODING = "store.parquet.enable_dictionary_encoding";
   OptionValidator PARQUET_WRITER_ENABLE_DICTIONARY_ENCODING_VALIDATOR = new BooleanValidator(
-      PARQUET_WRITER_ENABLE_DICTIONARY_ENCODING, false);
+      PARQUET_WRITER_ENABLE_DICTIONARY_ENCODING, true);
 
   String PARQUET_VECTOR_FILL_THRESHOLD = "store.parquet.vector_fill_threshold";
   OptionValidator PARQUET_VECTOR_FILL_THRESHOLD_VALIDATOR = new PositiveLongValidator(PARQUET_VECTOR_FILL_THRESHOLD, 99l, 85l);
@@ -162,21 +162,21 @@ public interface ExecConstants {
 
   // Number of pages the Async Parquet page reader will read before blocking
   String PARQUET_PAGEREADER_QUEUE_SIZE = "store.parquet.reader.pagereader.queuesize";
-  OptionValidator PARQUET_PAGEREADER_QUEUE_SIZE_VALIDATOR = new  PositiveLongValidator(PARQUET_PAGEREADER_QUEUE_SIZE, Integer.MAX_VALUE, 8);
+  OptionValidator PARQUET_PAGEREADER_QUEUE_SIZE_VALIDATOR = new  PositiveLongValidator(PARQUET_PAGEREADER_QUEUE_SIZE, Integer.MAX_VALUE, 4);
 
   String PARQUET_PAGEREADER_ENFORCETOTALSIZE = "store.parquet.reader.pagereader.enforceTotalSize";
   OptionValidator PARQUET_PAGEREADER_ENFORCETOTALSIZE_VALIDATOR = new BooleanValidator(PARQUET_PAGEREADER_ENFORCETOTALSIZE, false);
 
   String PARQUET_COLUMNREADER_ASYNC = "store.parquet.reader.columnreader.async";
-  OptionValidator PARQUET_COLUMNREADER_ASYNC_VALIDATOR = new BooleanValidator(PARQUET_COLUMNREADER_ASYNC, false);
+  OptionValidator PARQUET_COLUMNREADER_ASYNC_VALIDATOR = new BooleanValidator(PARQUET_COLUMNREADER_ASYNC, true);
 
   // Use a buffering reader for parquet page reader
   String PARQUET_PAGEREADER_USE_BUFFERED_READ = "store.parquet.reader.pagereader.bufferedread";
-  OptionValidator PARQUET_PAGEREADER_USE_BUFFERED_READ_VALIDATOR = new  BooleanValidator(PARQUET_PAGEREADER_USE_BUFFERED_READ, false);
+  OptionValidator PARQUET_PAGEREADER_USE_BUFFERED_READ_VALIDATOR = new  BooleanValidator(PARQUET_PAGEREADER_USE_BUFFERED_READ, true);
 
   // Size in MiB of the buffer the Parquet page reader will use to read from disk. Default is 1 MiB
   String PARQUET_PAGEREADER_BUFFER_SIZE = "store.parquet.reader.pagereader.buffersize";
-  OptionValidator PARQUET_PAGEREADER_BUFFER_SIZE_VALIDATOR = new  LongValidator(PARQUET_PAGEREADER_BUFFER_SIZE, 8*1024*1024);
+  OptionValidator PARQUET_PAGEREADER_BUFFER_SIZE_VALIDATOR = new  LongValidator(PARQUET_PAGEREADER_BUFFER_SIZE, 4*1024*1024);
 
   // try to use fadvise if available
   String PARQUET_PAGEREADER_USE_FADVISE = "store.parquet.reader.pagereader.usefadvise";
@@ -237,12 +237,12 @@ public interface ExecConstants {
       new BooleanValidator(HIVE_OPTIMIZE_SCAN_WITH_NATIVE_READERS, false);
 
   String SLICE_TARGET = "planner.slice_target";
-  long SLICE_TARGET_DEFAULT = 10000l;
+  long SLICE_TARGET_DEFAULT = 100000l;
   PositiveLongValidator SLICE_TARGET_OPTION = new PositiveLongValidator(SLICE_TARGET, Long.MAX_VALUE,
       SLICE_TARGET_DEFAULT);
 
   String CAST_TO_NULLABLE_NUMERIC = "drill.exec.functions.cast_empty_string_to_null";
-  OptionValidator CAST_TO_NULLABLE_NUMERIC_OPTION = new BooleanValidator(CAST_TO_NULLABLE_NUMERIC, false);
+  OptionValidator CAST_TO_NULLABLE_NUMERIC_OPTION = new BooleanValidator(CAST_TO_NULLABLE_NUMERIC, true);
 
   /**
    * HashTable runtime settings
@@ -308,15 +308,15 @@ public interface ExecConstants {
   OptionValidator AVERAGE_FIELD_WIDTH = new PositiveLongValidator(AVERAGE_FIELD_WIDTH_KEY, Long.MAX_VALUE, 8);
 
   BooleanValidator ENABLE_QUEUE = new BooleanValidator("exec.queue.enable", true);
-  LongValidator LARGE_QUEUE_SIZE = new PositiveLongValidator("exec.queue.large", 1000, 10);
-  LongValidator SMALL_QUEUE_SIZE = new PositiveLongValidator("exec.queue.small", 100000, 100);
+  LongValidator LARGE_QUEUE_SIZE = new PositiveLongValidator("exec.queue.large", 1000, 1);
+  LongValidator SMALL_QUEUE_SIZE = new PositiveLongValidator("exec.queue.small", 100000, 1);
   LongValidator QUEUE_THRESHOLD_SIZE = new PositiveLongValidator("exec.queue.threshold",
       Long.MAX_VALUE, 30000000);
   LongValidator QUEUE_TIMEOUT = new PositiveLongValidator("exec.queue.timeout_millis",
-      Long.MAX_VALUE, 60 * 1000 * 5);
+      Long.MAX_VALUE, 60 * 1000 * 60);
 
   String ENABLE_VERBOSE_ERRORS_KEY = "exec.errors.verbose";
-  OptionValidator ENABLE_VERBOSE_ERRORS = new BooleanValidator(ENABLE_VERBOSE_ERRORS_KEY, false);
+  OptionValidator ENABLE_VERBOSE_ERRORS = new BooleanValidator(ENABLE_VERBOSE_ERRORS_KEY, true);
 
   String ENABLE_NEW_TEXT_READER_KEY = "exec.storage.enable_new_text_reader";
   OptionValidator ENABLE_NEW_TEXT_READER = new BooleanValidator(ENABLE_NEW_TEXT_READER_KEY, true);
