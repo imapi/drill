@@ -158,17 +158,17 @@ public interface ExecConstants {
   String OUTPUT_FORMAT_OPTION = "store.format";
   OptionValidator OUTPUT_FORMAT_VALIDATOR = new StringValidator(OUTPUT_FORMAT_OPTION, "parquet");
   String PARQUET_BLOCK_SIZE = "store.parquet.block-size";
-  OptionValidator PARQUET_BLOCK_SIZE_VALIDATOR = new LongValidator(PARQUET_BLOCK_SIZE,16*1024*1024);
+  OptionValidator PARQUET_BLOCK_SIZE_VALIDATOR = new LongValidator(PARQUET_BLOCK_SIZE, 64*1024*1024);
   String PARQUET_PAGE_SIZE = "store.parquet.page-size";
   OptionValidator PARQUET_PAGE_SIZE_VALIDATOR = new LongValidator(PARQUET_PAGE_SIZE, 1024*1024);
   String PARQUET_DICT_PAGE_SIZE = "store.parquet.dictionary.page-size";
   OptionValidator PARQUET_DICT_PAGE_SIZE_VALIDATOR = new LongValidator(PARQUET_DICT_PAGE_SIZE, 1024*1024);
   String PARQUET_WRITER_COMPRESSION_TYPE = "store.parquet.compression";
   OptionValidator PARQUET_WRITER_COMPRESSION_TYPE_VALIDATOR = new EnumeratedStringValidator(
-      PARQUET_WRITER_COMPRESSION_TYPE, "gzip", "snappy", "gzip", "none");
+      PARQUET_WRITER_COMPRESSION_TYPE, "none", "snappy", "gzip", "none");
   String PARQUET_WRITER_ENABLE_DICTIONARY_ENCODING = "store.parquet.enable_dictionary_encoding";
   OptionValidator PARQUET_WRITER_ENABLE_DICTIONARY_ENCODING_VALIDATOR = new BooleanValidator(
-      PARQUET_WRITER_ENABLE_DICTIONARY_ENCODING, true);
+      PARQUET_WRITER_ENABLE_DICTIONARY_ENCODING, false);
 
   String PARQUET_VECTOR_FILL_THRESHOLD = "store.parquet.vector_fill_threshold";
   OptionValidator PARQUET_VECTOR_FILL_THRESHOLD_VALIDATOR = new PositiveLongValidator(PARQUET_VECTOR_FILL_THRESHOLD, 99l, 85l);
@@ -194,11 +194,11 @@ public interface ExecConstants {
 
   // Use a buffering reader for parquet page reader
   String PARQUET_PAGEREADER_USE_BUFFERED_READ = "store.parquet.reader.pagereader.bufferedread";
-  OptionValidator PARQUET_PAGEREADER_USE_BUFFERED_READ_VALIDATOR = new  BooleanValidator(PARQUET_PAGEREADER_USE_BUFFERED_READ, true);
+  OptionValidator PARQUET_PAGEREADER_USE_BUFFERED_READ_VALIDATOR = new  BooleanValidator(PARQUET_PAGEREADER_USE_BUFFERED_READ, false);
 
   // Size in MiB of the buffer the Parquet page reader will use to read from disk. Default is 1 MiB
   String PARQUET_PAGEREADER_BUFFER_SIZE = "store.parquet.reader.pagereader.buffersize";
-  OptionValidator PARQUET_PAGEREADER_BUFFER_SIZE_VALIDATOR = new  LongValidator(PARQUET_PAGEREADER_BUFFER_SIZE, 4*1024*1024);
+  OptionValidator PARQUET_PAGEREADER_BUFFER_SIZE_VALIDATOR = new  LongValidator(PARQUET_PAGEREADER_BUFFER_SIZE, 32*1024*1024);
 
   // try to use fadvise if available
   String PARQUET_PAGEREADER_USE_FADVISE = "store.parquet.reader.pagereader.usefadvise";
@@ -338,7 +338,7 @@ public interface ExecConstants {
       Long.MAX_VALUE, 60 * 1000 * 60);
 
   String ENABLE_VERBOSE_ERRORS_KEY = "exec.errors.verbose";
-  OptionValidator ENABLE_VERBOSE_ERRORS = new BooleanValidator(ENABLE_VERBOSE_ERRORS_KEY, true);
+  OptionValidator ENABLE_VERBOSE_ERRORS = new BooleanValidator(ENABLE_VERBOSE_ERRORS_KEY, false);
 
   String ENABLE_NEW_TEXT_READER_KEY = "exec.storage.enable_new_text_reader";
   OptionValidator ENABLE_NEW_TEXT_READER = new BooleanValidator(ENABLE_NEW_TEXT_READER_KEY, true);
